@@ -9,7 +9,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 export default function AsteroidBelt({ useRealScale }: AsteroidBeltProps) {
-  const asteroidsRef = useRef()
+  const asteroidsRef = useRef<THREE.Points>(null)
   const asteroidCount = 2000
 
   const [positions, sizes] = useMemo(() => {
@@ -38,13 +38,13 @@ export default function AsteroidBelt({ useRealScale }: AsteroidBeltProps) {
     <points ref={asteroidsRef}>
       <bufferGeometry>
         <bufferAttribute
-          attachObject={['attributes', 'position']}
+          attach="attributes-position"
           count={asteroidCount}
           array={positions}
           itemSize={3}
         />
         <bufferAttribute
-          attachObject={['attributes', 'size']}
+          attach="attributes-size"
           count={asteroidCount}
           array={sizes}
           itemSize={1}
