@@ -11,14 +11,14 @@ import InfoPanel from './InfoPanel'
 import AsteroidBelt from './AsteroidBelt'
 
 const planets = [
-  { name: 'Sun', position: [0, 0, 0], size: 5, textureUrl: '/assets/sun.jpg', mass: 1.989e30, rotationSpeed: 0.002, info: 'The star at the center of our Solar System.' },
-  { name: 'Mercury', position: [10, 0, 0], size: 0.5, textureUrl: '/assets/mercury.jpg', mass: 3.285e23, rotationSpeed: 0.01, orbitalPeriod: 0.24, info: 'The smallest planet in our Solar System and closest to the Sun.' },
-  { name: 'Venus', position: [15, 0, 0], size: 0.8, textureUrl: '/assets/venus.jpg', mass: 4.867e24, rotationSpeed: 0.008, orbitalPeriod: 0.62, info: 'Often called Earth\'s sister planet due to their similar size and mass.' },
-  { name: 'Mars', position: [25, 0, 0], size: 0.7, textureUrl: '/assets/mars.jpg', mass: 6.39e23, rotationSpeed: 0.009, orbitalPeriod: 1.88, info: 'Known as the Red Planet due to its reddish appearance.' },
-  { name: 'Jupiter', position: [35, 0, 0], size: 2, textureUrl: '/assets/jupiter.jpg', mass: 1.898e27, rotationSpeed: 0.004, orbitalPeriod: 11.86, info: 'The largest planet in our Solar System.' },
-  { name: 'Saturn', position: [45, 0, 0], size: 1.8, textureUrl: '/assets/saturn.jpg', mass: 5.683e26, rotationSpeed: 0.003, orbitalPeriod: 29.46, info: 'Known for its prominent ring system.' },
-  { name: 'Uranus', position: [55, 0, 0], size: 1.3, textureUrl: '/assets/uranus.jpg', mass: 8.681e25, rotationSpeed: 0.002, orbitalPeriod: 84.01, info: 'An ice giant with a tilted rotation axis.' },
-  { name: 'Neptune', position: [65, 0, 0], size: 1.2, textureUrl: '/assets/neptune.jpg', mass: 1.024e26, rotationSpeed: 0.001, orbitalPeriod: 164.79, info: 'The windiest planet in our Solar System.' },
+  { name: 'Sun', position: [0, 0, 0], size: 5, textureUrl: '/2k_sun.jpg', mass: 1.989e30, rotationSpeed: 0.002, info: 'The star at the center of our Solar System.' },
+  { name: 'Mercury', position: [10, 0, 0], size: 0.5, textureUrl: '/2k_mercury.jpg', mass: 3.285e23, rotationSpeed: 0.01, orbitalPeriod: 0.24, info: 'The smallest planet in our Solar System and closest to the Sun.' },
+  { name: 'Venus', position: [15, 0, 0], size: 0.8, textureUrl: '/2k_uranus.jpg', mass: 4.867e24, rotationSpeed: 0.008, orbitalPeriod: 0.62, info: 'Often called Earth\'s sister planet due to their similar size and mass.' },
+  { name: 'Mars', position: [25, 0, 0], size: 0.7, textureUrl: '/2k_mars.jpg', mass: 6.39e23, rotationSpeed: 0.009, orbitalPeriod: 1.88, info: 'Known as the Red Planet due to its reddish appearance.' },
+  { name: 'Jupiter', position: [35, 0, 0], size: 2, textureUrl: '/2k_jupiter.jpg', mass: 1.898e27, rotationSpeed: 0.004, orbitalPeriod: 11.86, info: 'The largest planet in our Solar System.' },
+  { name: 'Saturn', position: [45, 0, 0], size: 1.8, textureUrl: '/2k_saturn.jpg', mass: 5.683e26, rotationSpeed: 0.003, orbitalPeriod: 29.46, info: 'Known for its prominent ring system.' },
+  { name: 'Uranus', position: [55, 0, 0], size: 1.3, textureUrl: '/2k_uranus.jpg', mass: 8.681e25, rotationSpeed: 0.002, orbitalPeriod: 84.01, info: 'An ice giant with a tilted rotation axis.' },
+  { name: 'Neptune', position: [65, 0, 0], size: 1.2, textureUrl: '/2k_neptune.jpg', mass: 1.024e26, rotationSpeed: 0.001, orbitalPeriod: 164.79, info: 'The windiest planet in our Solar System.' },
 ]
 
 function CameraController({ focusedPlanet }) {
@@ -54,7 +54,7 @@ function SunLight() {
 }
 
 function SpaceBackground() {
-  const spaceTexture = useTexture('/assets/space.jpg')
+  const spaceTexture = useTexture('/2k_stars_milky_way.jpg')
   return (
     <primitive object={new THREE.Mesh(
       new THREE.SphereGeometry(300, 64, 64),
