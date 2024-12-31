@@ -71,7 +71,7 @@ function SunLight() {
 }
 
 function SpaceBackground() {
-  const spaceTexture = useTexture('/assets/space.jpg')
+  const spaceTexture = useTexture('/2k_stars_milky_way.jpg')
   return (
     <primitive object={new THREE.Mesh(
       new THREE.SphereGeometry(300, 64, 64),
