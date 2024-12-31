@@ -2,7 +2,11 @@
 
 import * as THREE from 'three'
 
-export default function OrbitalPath({ radius }) {
+interface OrbitalPathProps {
+  radius: number;
+}
+
+export default function OrbitalPath({ radius }: OrbitalPathProps) {
   const points = []
   for (let i = 0; i <= 64; i++) {
     const angle = (i / 64) * Math.PI * 2
