@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
@@ -30,9 +32,9 @@ const Controls: React.FC<ControlsProps> = ({
       </div>
       <div className="absolute bottom-4 left-4 right-4 z-10 flex justify-center">
         <div className="flex flex-wrap justify-center gap-2 bg-black/50 p-2 rounded-lg max-w-full overflow-x-auto">
-          {['Sun', 'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map((planet) => (
-            <Button key={planet} variant="outline" size="sm" onClick={() => setFocusedPlanet(planet)}>
-              {planet}
+          {['Sun', 'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map((planetName) => (
+            <Button key={planetName} variant="outline" size="sm" onClick={() => setFocusedPlanet(planetName)}>
+              {planetName}
             </Button>
           ))}
         </div>
@@ -60,9 +62,6 @@ const Controls: React.FC<ControlsProps> = ({
 
 export default React.memo(Controls)
 
-Now, let's update the `components/InfoPanel.tsx` file to improve accessibility and responsiveness:
-
-```tsx file="components/InfoPanel.tsx"
 'use client'
 
 import React from 'react'
