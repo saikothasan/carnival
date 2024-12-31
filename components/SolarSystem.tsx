@@ -10,6 +10,17 @@ import OrbitalPath from './OrbitalPath'
 import InfoPanel from './InfoPanel'
 import AsteroidBelt from './AsteroidBelt'
 
+export interface PlanetData {
+  name: string;
+  position: [number, number, number];
+  size: number;
+  textureUrl: string;
+  mass: number;
+  rotationSpeed: number;
+  orbitalPeriod?: number;
+  info: string;
+}
+
 const planets = [
   { name: 'Sun', position: [0, 0, 0], size: 5, textureUrl: '/2k_sun.jpg', mass: 1.989e30, rotationSpeed: 0.002, info: 'The star at the center of our Solar System.' },
   { name: 'Mercury', position: [10, 0, 0], size: 0.5, textureUrl: '/2k_mercury.jpg', mass: 3.285e23, rotationSpeed: 0.01, orbitalPeriod: 0.24, info: 'The smallest planet in our Solar System and closest to the Sun.' },
@@ -21,9 +32,13 @@ const planets = [
   { name: 'Neptune', position: [65, 0, 0], size: 1.2, textureUrl: '/2k_neptune.jpg', mass: 1.024e26, rotationSpeed: 0.001, orbitalPeriod: 164.79, info: 'The windiest planet in our Solar System.' },
 ]
 
-function CameraController({ focusedPlanet }) {
+interface CameraControllerProps {
+  focusedPlanet: string | null;
+}
+
+function CameraController({ focusedPlanet }: CameraControllerProps) {
   const { camera } = useThree()
-  const controlsRef = useRef()
+  const controlsRef = useRef<any>(null)
 
   useEffect(() => {
     if (focusedPlanet) {
@@ -46,15 +61,17 @@ function CameraController({ focusedPlanet }) {
 }
 
 function SunLight() {
-  const light = useRef()
+  const light = useRef<THREE.PointLight>(null)
   useFrame(({ clock }) => {
-    light.current.intensity = 1.5 + Math.sin(clock.getElapsedTime() * 2) * 0.1
+    if (light.current) {
+      light.current.intensity = 1.5 + Math.sin(clock.getElapsedTime() * 2) * 0.1
+    }
   })
   return <pointLight ref={light} position={[0, 0, 0]} intensity={1.5} distance={100} decay={2} />
 }
 
 function SpaceBackground() {
-  const spaceTexture = useTexture('/2k_stars_milky_way.jpg')
+  const spaceTexture = useTexture('/assets/space.jpg')
   return (
     <primitive object={new THREE.Mesh(
       new THREE.SphereGeometry(300, 64, 64),
@@ -63,7 +80,15 @@ function SpaceBackground() {
   )
 }
 
-function SolarSystemScene({ focusedPlanet, setFocusedPlanet, useRealScale, timeSpeed, isPlaying }) {
+interface SolarSystemSceneProps {
+  focusedPlanet: string | null;
+  setFocusedPlanet: (planet: string | null) => void;
+  useRealScale: boolean;
+  timeSpeed: number;
+  isPlaying: boolean;
+}
+
+function SolarSystemScene({ focusedPlanet, setFocusedPlanet, useRealScale, timeSpeed, isPlaying }: SolarSystemSceneProps) {
   const [time, setTime] = useState(0)
 
   useFrame((state, delta) => {
@@ -107,7 +132,14 @@ function SolarSystemScene({ focusedPlanet, setFocusedPlanet, useRealScale, timeS
   )
 }
 
-export default function SolarSystem({ focusedPlanet, setFocusedPlanet, timeSpeed, isPlaying }) {
+interface SolarSystemProps {
+  focusedPlanet: string | null;
+  setFocusedPlanet: (planet: string | null) => void;
+  timeSpeed: number;
+  isPlaying: boolean;
+}
+
+export default function SolarSystem({ focusedPlanet, setFocusedPlanet, timeSpeed, isPlaying }: SolarSystemProps) {
   const [useRealScale, setUseRealScale] = useState(false)
 
   return (
