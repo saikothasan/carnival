@@ -1,10 +1,14 @@
+type AsteroidBeltProps = {
+  useRealScale: boolean;
+};
+
 'use client'
 
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-export default function AsteroidBelt({ useRealScale }) {
+export default function AsteroidBelt({ useRealScale }: AsteroidBeltProps) {
   const asteroidsRef = useRef()
   const asteroidCount = 2000
 
