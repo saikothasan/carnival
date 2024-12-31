@@ -9,7 +9,7 @@ import { Loader2, Play, Pause, RotateCcw } from 'lucide-react'
 const SolarSystem = dynamic(() => import('@/components/SolarSystem'), { ssr: false })
 
 export default function Home() {
-  const [focusedPlanet, setFocusedPlanet] = useState(null)
+  const [focusedPlanet, setFocusedPlanet] = useState<string | null>(null)
   const [showInfo, setShowInfo] = useState(true)
   const [timeSpeed, setTimeSpeed] = useState(1)
   const [isPlaying, setIsPlaying] = useState(true)
@@ -23,7 +23,7 @@ export default function Home() {
       }>
         <SolarSystem 
           focusedPlanet={focusedPlanet} 
-          setFocusedPlanet={setFocusedPlanet}
+          setFocusedPlanet={(planet: string | null) => setFocusedPlanet(planet)}
           timeSpeed={timeSpeed}
           isPlaying={isPlaying}
         />
