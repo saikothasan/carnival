@@ -4,7 +4,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 
-export default function InfoPanel({ planets, focusedPlanet, useRealScale, setUseRealScale }) {
+interface Planet {
+  name: string;
+  size: number;
+  mass: number;
+  rotationSpeed: number;
+  orbitalPeriod?: number;
+  info: string;
+}
+
+interface InfoPanelProps {
+  planets: Planet[];
+  focusedPlanet: string | null;
+  useRealScale: boolean;
+  setUseRealScale: (value: boolean) => void;
+}
+
+export default function InfoPanel({ planets, focusedPlanet, useRealScale, setUseRealScale }: InfoPanelProps) {
   const planet = planets.find(p => p.name === focusedPlanet) || 
     { name: 'Earth', size: 1, mass: 5.972e24, rotationSpeed: 0.01, orbitalPeriod: 1, info: 'Our home planet, the only known planet to harbor life.' }
 
