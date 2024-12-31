@@ -1,12 +1,12 @@
-type AsteroidBeltProps = {
-  useRealScale: boolean;
-};
-
 'use client'
 
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+
+interface AsteroidBeltProps {
+  useRealScale: boolean;
+}
 
 export default function AsteroidBelt({ useRealScale }: AsteroidBeltProps) {
   const asteroidsRef = useRef<THREE.Points>(null)

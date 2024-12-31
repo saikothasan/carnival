@@ -16,9 +16,9 @@ interface EarthProps {
 export default function Earth({ position, size, onClick, isFocused, time }: EarthProps) {
   const meshRef = useRef<THREE.Mesh>(null)
   const [dayTexture, nightTexture, cloudsTexture] = useTexture([
-    '/2k_earth_daymap.jpg',
-    '/2k_earth_nightmap.jpg',
-    '/2k_earth_clouds.jpg'
+    '/assets/earth-day.jpg',
+    '/assets/earth-night.jpg',
+    '/assets/earth-clouds.png'
   ])
 
   useFrame((state, delta) => {
