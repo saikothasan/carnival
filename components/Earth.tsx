@@ -5,8 +5,16 @@ import { useFrame } from '@react-three/fiber'
 import { useTexture, Text } from '@react-three/drei'
 import * as THREE from 'three'
 
-export default function Earth({ position, size, onClick, isFocused, time }) {
-  const meshRef = useRef()
+interface EarthProps {
+  position: [number, number, number];
+  size: number;
+  onClick: () => void;
+  isFocused: boolean;
+  time: number;
+}
+
+export default function Earth({ position, size, onClick, isFocused, time }: EarthProps) {
+  const meshRef = useRef<THREE.Mesh>(null)
   const [dayTexture, nightTexture, cloudsTexture] = useTexture([
     '/2k_earth_daymap.jpg',
     '/2k_earth_nightmap.jpg',
