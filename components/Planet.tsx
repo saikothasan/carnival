@@ -5,8 +5,20 @@ import { useFrame } from '@react-three/fiber'
 import { Text, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 
-export default function Planet({ position, size, textureUrl, name, rotationSpeed, orbitalPeriod, onClick, isFocused, time }) {
-  const meshRef = useRef()
+interface PlanetProps {
+  position: [number, number, number];
+  size: number;
+  textureUrl: string;
+  name: string;
+  rotationSpeed: number;
+  orbitalPeriod?: number;
+  onClick: () => void;
+  isFocused: boolean;
+  time: number;
+}
+
+export default function Planet({ position, size, textureUrl, name, rotationSpeed, orbitalPeriod, onClick, isFocused, time }: PlanetProps) {
+  const meshRef = useRef<THREE.Mesh>(null)
   const texture = useTexture(textureUrl)
 
   useFrame((state, delta) => {
