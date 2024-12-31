@@ -10,14 +10,16 @@ interface PlanetProps {
   size: number;
   textureUrl: string;
   name: string;
+  mass: number;
   rotationSpeed: number;
   orbitalPeriod?: number;
+  info: string;
   onClick: () => void;
   isFocused: boolean;
   time: number;
 }
 
-export default function Planet({ position, size, textureUrl, name, rotationSpeed, orbitalPeriod, onClick, isFocused, time }: PlanetProps) {
+export default function Planet({ position, size, textureUrl, name, mass, rotationSpeed, orbitalPeriod, info, onClick, isFocused, time }: PlanetProps) {
   const meshRef = useRef<THREE.Mesh>(null)
   const texture = useTexture(textureUrl)
 
