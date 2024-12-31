@@ -8,9 +8,9 @@ import * as THREE from 'three'
 export default function Earth({ position, size, onClick, isFocused, time }) {
   const meshRef = useRef()
   const [dayTexture, nightTexture, cloudsTexture] = useTexture([
-    '/assets/earth-day.jpg',
-    '/assets/earth-night.jpg',
-    '/assets/earth-clouds.png'
+    '/2k_earth_daymap.jpg',
+    '/2k_earth_nightmap.jpg',
+    '/2k_earth_clouds.jpg'
   ])
 
   useFrame((state, delta) => {
