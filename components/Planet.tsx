@@ -5,10 +5,28 @@ import { useFrame } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 import * as THREE from 'three'
 
-export default function Planet({ position, size, color, name, rotationSpeed, onClick, isFocused }) {
-  const meshRef = useRef()
+interface PlanetProps {
+  position: [number, number, number] // A 3D position vector
+  size: number // Radius of the planet
+  color: string // Color of the planet material
+  name: string // Name of the planet
+  rotationSpeed: number // Speed of rotation
+  onClick: () => void // Callback for click events
+  isFocused: boolean // Whether the planet is focused
+}
 
-  useFrame((state, delta) => {
+export default function Planet({
+  position,
+  size,
+  color,
+  name,
+  rotationSpeed,
+  onClick,
+  isFocused,
+}: PlanetProps) {
+  const meshRef = useRef<THREE.Mesh>(null)
+
+  useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.y += rotationSpeed
     }
@@ -38,4 +56,3 @@ export default function Planet({ position, size, color, name, rotationSpeed, onC
     </group>
   )
 }
-
