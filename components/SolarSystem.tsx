@@ -1,10 +1,9 @@
 'use client'
 
-import { Canvas, useThree } from '@react-three/fiber'
-import { OrbitControls as DreiOrbitControls, Stars, Environment, PerspectiveCamera } from '@react-three/drei'
-import { Suspense, useRef, useEffect } from 'react'
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls, Stars, Environment, PerspectiveCamera } from '@react-three/drei'
+import { Suspense } from 'react'
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Planet from './Planet'
 import InfoPanel from './InfoPanel'
 
@@ -16,10 +15,6 @@ interface PlanetType {
   mass: number
   rotationSpeed: number
   info: string
-}
-
-interface CameraControllerProps {
-  focusedPlanet: string | null
 }
 
 interface SolarSystemProps {
@@ -39,45 +34,18 @@ const planets: PlanetType[] = [
   { name: 'Neptune', position: [65, 0, 0], size: 1.2, color: '#4169E1', mass: 1.024e26, rotationSpeed: 0.001, info: 'The windiest planet in our Solar System.' },
 ]
 
-function CameraController({ focusedPlanet }: CameraControllerProps) {
-  const { camera, gl } = useThree()
-  const controlsRef = useRef<OrbitControls | null>(null)
-
-  useEffect(() => {
-    if (!controlsRef.current) {
-      controlsRef.current = new OrbitControls(camera, gl.domElement)
-    }
-
-    if (focusedPlanet) {
-      const planet = planets.find(p => p.name === focusedPlanet)
-      if (planet) {
-        const targetPosition = new THREE.Vector3(...planet.position)
-        targetPosition.y += 5
-        targetPosition.z += 10
-        camera.position.copy(targetPosition)
-        controlsRef.current.target.set(...planet.position)
-      }
-    } else {
-      camera.position.set(0, 50, 100)
-      controlsRef.current.target.set(0, 0, 0)
-    }
-
-    controlsRef.current.update()
-
-    return () => {
-      controlsRef.current?.dispose()
-    }
-  }, [focusedPlanet, camera, gl])
-
-  return null
-}
-
 export default function SolarSystem({ focusedPlanet, setFocusedPlanet }: SolarSystemProps) {
   return (
     <>
       <Canvas>
         <PerspectiveCamera makeDefault position={[0, 50, 100]} />
-        <CameraController focusedPlanet={focusedPlanet} />
+        <OrbitControls 
+          enableDamping 
+          dampingFactor={0.1} 
+          enableZoom 
+          zoomSpeed={0.6} 
+          enablePan 
+        />
         <Suspense fallback={null}>
           <Environment preset="night" background />
           <Stars radius={300} depth={60} count={20000} factor={7} saturation={0} />
