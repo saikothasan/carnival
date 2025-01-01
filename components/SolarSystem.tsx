@@ -7,7 +7,26 @@ import * as THREE from 'three'
 import Planet from './Planet'
 import InfoPanel from './InfoPanel'
 
-const planets = [
+interface PlanetType {
+  name: string
+  position: [number, number, number]
+  size: number
+  color: string
+  mass: number
+  rotationSpeed: number
+  info: string
+}
+
+interface CameraControllerProps {
+  focusedPlanet: string | null
+}
+
+interface SolarSystemProps {
+  focusedPlanet: string | null
+  setFocusedPlanet: (planet: string | null) => void
+}
+
+const planets: PlanetType[] = [
   { name: 'Sun', position: [0, 0, 0], size: 5, color: '#FDB813', mass: 1.989e30, rotationSpeed: 0.002, info: 'The star at the center of our Solar System.' },
   { name: 'Mercury', position: [10, 0, 0], size: 0.5, color: '#A9A9A9', mass: 3.285e23, rotationSpeed: 0.01, info: 'The smallest planet in our Solar System and closest to the Sun.' },
   { name: 'Venus', position: [15, 0, 0], size: 0.8, color: '#FFA500', mass: 4.867e24, rotationSpeed: 0.008, info: 'Often called Earth\'s sister planet due to their similar size and mass.' },
@@ -19,9 +38,9 @@ const planets = [
   { name: 'Neptune', position: [65, 0, 0], size: 1.2, color: '#4169E1', mass: 1.024e26, rotationSpeed: 0.001, info: 'The windiest planet in our Solar System.' },
 ]
 
-function CameraController({ focusedPlanet }) {
+function CameraController({ focusedPlanet }: CameraControllerProps) {
   const { camera } = useThree()
-  const controlsRef = useRef()
+  const controlsRef = useRef<THREE.OrbitControls>(null)
 
   useEffect(() => {
     if (focusedPlanet) {
@@ -31,19 +50,19 @@ function CameraController({ focusedPlanet }) {
         targetPosition.y += 5
         targetPosition.z += 10
         camera.position.copy(targetPosition)
-        controlsRef.current.target.set(...planet.position)
+        controlsRef.current?.target.set(...planet.position)
       }
     } else {
       camera.position.set(0, 50, 100)
-      controlsRef.current.target.set(0, 0, 0)
+      controlsRef.current?.target.set(0, 0, 0)
     }
-    controlsRef.current.update()
+    controlsRef.current?.update()
   }, [focusedPlanet, camera])
 
   return <OrbitControls ref={controlsRef} />
 }
 
-export default function SolarSystem({ focusedPlanet, setFocusedPlanet }) {
+export default function SolarSystem({ focusedPlanet, setFocusedPlanet }: SolarSystemProps) {
   return (
     <>
       <Canvas>
@@ -68,4 +87,3 @@ export default function SolarSystem({ focusedPlanet, setFocusedPlanet }) {
     </>
   )
 }
-
