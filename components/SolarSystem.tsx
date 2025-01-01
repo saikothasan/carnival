@@ -1,9 +1,10 @@
 'use client'
 
-import { Canvas, useThree, useFrame } from '@react-three/fiber'
-import { OrbitControls, Stars, Environment, PerspectiveCamera } from '@react-three/drei'
+import { Canvas, useThree } from '@react-three/fiber'
+import { OrbitControls as DreiOrbitControls, Stars, Environment, PerspectiveCamera } from '@react-three/drei'
 import { Suspense, useRef, useEffect } from 'react'
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Planet from './Planet'
 import InfoPanel from './InfoPanel'
 
@@ -39,10 +40,14 @@ const planets: PlanetType[] = [
 ]
 
 function CameraController({ focusedPlanet }: CameraControllerProps) {
-  const { camera } = useThree()
-  const controlsRef = useRef<THREE.OrbitControls>(null)
+  const { camera, gl } = useThree()
+  const controlsRef = useRef<OrbitControls | null>(null)
 
   useEffect(() => {
+    if (!controlsRef.current) {
+      controlsRef.current = new OrbitControls(camera, gl.domElement)
+    }
+
     if (focusedPlanet) {
       const planet = planets.find(p => p.name === focusedPlanet)
       if (planet) {
@@ -50,16 +55,21 @@ function CameraController({ focusedPlanet }: CameraControllerProps) {
         targetPosition.y += 5
         targetPosition.z += 10
         camera.position.copy(targetPosition)
-        controlsRef.current?.target.set(...planet.position)
+        controlsRef.current.target.set(...planet.position)
       }
     } else {
       camera.position.set(0, 50, 100)
-      controlsRef.current?.target.set(0, 0, 0)
+      controlsRef.current.target.set(0, 0, 0)
     }
-    controlsRef.current?.update()
-  }, [focusedPlanet, camera])
 
-  return <OrbitControls ref={controlsRef} />
+    controlsRef.current.update()
+
+    return () => {
+      controlsRef.current?.dispose()
+    }
+  }, [focusedPlanet, camera, gl])
+
+  return null
 }
 
 export default function SolarSystem({ focusedPlanet, setFocusedPlanet }: SolarSystemProps) {
