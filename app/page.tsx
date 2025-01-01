@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 const SolarSystem = dynamic(() => import('@/components/SolarSystem'), { ssr: false })
 
 export default function Home() {
-  const [focusedPlanet, setFocusedPlanet] = useState(null)
+  const [focusedPlanet, setFocusedPlanet] = useState<string | null>(null) // Explicitly define the type
 
   return (
     <div className="relative w-full h-screen">
@@ -30,4 +30,3 @@ export default function Home() {
     </div>
   )
 }
-
