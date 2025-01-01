@@ -1,36 +1,33 @@
-import { Metadata } from 'next'
+'use client'
+
 import dynamic from 'next/dynamic'
-import { Suspense } from 'react'
-import { Loader2 } from 'lucide-react'
-import ErrorBoundary from '@/components/ErrorBoundary'
+import { Suspense, useState } from 'react'
+import { Button } from "@/components/ui/button"
 
-const SolarSystem = dynamic(() => import('@/components/SolarSystem').then(mod => mod.default), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full flex items-center justify-center bg-black">
-      <Loader2 className="w-8 h-8 text-white animate-spin" />
-    </div>
-  ),
-})
-
-export const metadata: Metadata = {
-  title: '3D Solar System Explorer',
-  description: 'Explore our solar system in an interactive 3D environment',
-}
+const SolarSystem = dynamic(() => import('@/components/SolarSystem'), { ssr: false })
 
 export default function Home() {
+  const [focusedPlanet, setFocusedPlanet] = useState(null)
+
   return (
-    <ErrorBoundary>
-      <div className="relative w-full h-screen">
-        <Suspense fallback={
-          <div className="w-full h-full flex items-center justify-center bg-black">
-            <Loader2 className="w-8 h-8 text-white animate-spin" />
-          </div>
-        }>
-          <SolarSystem />
-        </Suspense>
+    <div className="relative w-full h-screen">
+      <Suspense fallback={<div>Loading...</div>}>
+        <SolarSystem focusedPlanet={focusedPlanet} setFocusedPlanet={setFocusedPlanet} />
+      </Suspense>
+      <div className="absolute top-4 left-4 z-10">
+        <h1 className="text-2xl font-bold text-white mb-2">3D Solar System Explorer</h1>
+        <Button variant="outline" onClick={() => setFocusedPlanet(null)}>Reset View</Button>
       </div>
-    </ErrorBoundary>
+      <div className="absolute bottom-4 left-4 right-4 z-10 flex justify-center">
+        <div className="flex space-x-2 bg-black/50 p-2 rounded-lg">
+          {['Sun', 'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map((planet) => (
+            <Button key={planet} variant="outline" size="sm" onClick={() => setFocusedPlanet(planet)}>
+              {planet}
+            </Button>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
 
